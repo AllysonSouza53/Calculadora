@@ -1,11 +1,12 @@
-﻿namespace MauiAppCalculadora
+﻿
+namespace MauiAppCalculadora
 {
     public partial class MainPage : ContentPage
     {
         String? operação = null;
 
         double MPreOp = 0;
-        double MPostOp = 0;
+        double MPosOp = 0;
         double V = 0;
 
         string MemV = "";
@@ -30,7 +31,7 @@
             visor.Text = "0";
             MemV = "";
             MPreOp = 0;
-            MPostOp = 0;
+            MPosOp = 0;
             operação = null;
         }
 
@@ -50,7 +51,10 @@
 
         private void dividir_Clicked(object sender, EventArgs e)
         {
-
+            MPreOp = Convert.ToDouble(visor.Text);
+            MemV = dividir.Text;
+            operação = "/";
+            visor.Text = MemV;
         }
 
         private void num7_Clicked(object sender, EventArgs e)
@@ -73,7 +77,10 @@
 
         private void multiplicacao_Clicked(object sender, EventArgs e)
         {
-
+            MPreOp = Convert.ToDouble(visor.Text);
+            MemV = multiplicacao.Text;
+            operação = "*";
+            visor.Text = MemV;
         }
 
         private void num4_Clicked(object sender, EventArgs e)
@@ -95,7 +102,10 @@
 
         private void menos_Clicked(object sender, EventArgs e)
         {
-
+            MPreOp = Convert.ToDouble(visor.Text);
+            MemV = menos.Text;
+            operação = "-";
+            visor.Text = MemV;
         }
 
         private void num_1_Clicked(object sender, EventArgs e)
@@ -118,7 +128,10 @@
 
         private void mais_Clicked(object sender, EventArgs e)
         {
-
+            MPreOp = Convert.ToDouble(visor.Text);
+            MemV = mais.Text;
+            operação = "+";
+            visor.Text = MemV;
         }
 
         private void num_0_Clicked(System.Object sender, System.EventArgs e)
@@ -129,12 +142,40 @@
 
         private void ponto_Clicked(System.Object sender, System.EventArgs e)
         {
-
+            removedor_de_sinais_no_visor();
+            MemV += ponto.Text;
+            visor.Text = MemV;
         }
 
         private void igual_Clicked(System.Object sender, System.EventArgs e)
         {
+            try
+            {
+                MPosOp = Convert.ToDouble(visor.Text);
 
+                Double R = 0;
+                
+                switch (operação)
+                {
+                    case "+":
+                        R = MPreOp + MPosOp;
+                        break;
+                    case "-":
+                        R = MPreOp - MPosOp;
+                        break;
+                    case "*":
+                        R = MPreOp * MPosOp;
+                        break;
+                    case "/":
+                        R = MPreOp / MPosOp;
+                        break;
+                }
+                visor.Text = R.ToString();
+            }
+            catch (Exception ex)
+            {
+                visor.Text = ex.Message;
+            }
         }
     }
 
